@@ -18,6 +18,13 @@
 	</properties>
 
 	<dependencies>
+    <!-- um den server nicht ständig neustarten zu müssen -->
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <optional>true</optional>
+    </dependency>
 
 		<!-- Persistence -->
 
