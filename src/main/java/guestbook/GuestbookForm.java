@@ -15,7 +15,9 @@
  */
 package guestbook;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 /**
  * Type to bind request payloads and make them available in the controller. In contrast to {@link
@@ -35,6 +37,12 @@ class GuestbookForm {
   private final @NotBlank String name;
   private final @NotBlank String text;
 
+  @Email(
+      regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
+      flags = Pattern.Flag.CASE_INSENSITIVE,
+      message = "Please enter a valid email adress")
+  private final String email;
+
   /**
    * Creates a new {@link GuestbookForm} with the given name and text. Spring Framework will use
    * this constructor to bind the values provided in the web form described in {@code
@@ -47,10 +55,11 @@ class GuestbookForm {
    * @param name the value to bind to {@code name}
    * @param text the value to bind to {@code text}
    */
-  public GuestbookForm(String name, String text) {
+  public GuestbookForm(String name, String text, String email) {
 
     this.name = name;
     this.text = text;
+    this.email = email;
   }
 
   /**
@@ -77,6 +86,10 @@ class GuestbookForm {
     return text;
   }
 
+  public String getEmail() {
+    return email;
+  }
+
   /**
    * Returns a new {@link GuestbookEntry} using the data submitted in the request.
    *
@@ -85,6 +98,6 @@ class GuestbookForm {
    *     actually set.
    */
   GuestbookEntry toNewEntry() {
-    return new GuestbookEntry(getName(), getText());
+    return new GuestbookEntry(getName(), getText(), getEmail());
   }
 }

@@ -56,20 +56,22 @@ public class Application {
    */
   @Bean
   CommandLineRunner init(GuestbookRepository guestbook) {
+    String email = "foo@gmail.com";
 
     return args -> {
       Stream.of( //
-              new GuestbookEntry("artjom", "hallo"),
-              new GuestbookEntry("simon", "second"),
-              new GuestbookEntry("H4xx0r", "first!!!"), //
-              new GuestbookEntry("Arni", "Hasta la vista, baby"), //
+              new GuestbookEntry("artjom", "hallo", email),
+              new GuestbookEntry("H4xx0r", "first!!!", email), //
+              new GuestbookEntry("Arni", "Hasta la vista, baby", email), //
               new GuestbookEntry(
                   "Duke Nukem",
-                  "It's time to kick ass and chew bubble gum. And I'm all out of gum."), //
+                  "It's time to kick ass and chew bubble gum. And I'm all out of gum.",
+                  email), //
               new GuestbookEntry(
                   "Gump1337",
                   "Mama always said life was like a box of chocolates. You never know what you're"
-                      + " gonna get.")) //
+                      + " gonna get.",
+                  email)) //
           .forEach(guestbook::save);
     };
   }
